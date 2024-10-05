@@ -5,6 +5,9 @@
 * Add `phpstan` and `ecs` code linting
 * Add `code-analysis.yaml` GitHub action
 
+### Fixed
+* Fixed an issue where avatars wouldn't display ([#37](https://github.com/nystudio107/craft-disqus/issues/37))
+
 ## 1.1.3 - 2021.04.20
 ### Added
 * Added Dockerfile & Makefile for building docs
