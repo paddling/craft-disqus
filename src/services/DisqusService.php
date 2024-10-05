@@ -12,12 +12,11 @@
 namespace nystudio107\disqus\services;
 
 use Craft;
-
 use craft\base\Component;
 use craft\helpers\Template;
+use craft\web\User;
 use craft\web\View;
 use nystudio107\disqus\Disqus;
-
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
@@ -132,7 +131,9 @@ class DisqusService extends Component
             $data = [];
 
             // Set the data array
-            $currentUser = Craft::$app->getUser()->getIdentity();
+            /** @var User $user */
+            $user = Craft::$app->getUser();
+            $currentUser = $user->getIdentity();
             if ($currentUser) {
                 $data['id'] = $currentUser->id;
                 if (Craft::$app->getConfig()->getGeneral()->useEmailAsUsername) {

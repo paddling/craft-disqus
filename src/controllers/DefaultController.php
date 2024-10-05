@@ -12,9 +12,7 @@
 namespace nystudio107\disqus\controllers;
 
 use Craft;
-
 use craft\web\Controller;
-use nystudio107\disqus\Disqus;
 
 /**
  * @author    nystudio107
@@ -26,11 +24,6 @@ class DefaultController extends Controller
     // Protected Properties
     // =========================================================================
 
-    /**
-     * @var    bool|array Allows anonymous access to this controller's actions.
-     *         The actions must be in 'kebab-case'
-     * @access protected
-     */
     protected $allowAnonymous = ['logout-redirect'];
 
     // Public Methods
