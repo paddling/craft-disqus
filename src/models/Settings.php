@@ -11,11 +11,10 @@
 
 namespace nystudio107\disqus\models;
 
-use nystudio107\disqus\Disqus;
-
-use Craft;
 use craft\base\Model;
+
 use craft\behaviors\EnvAttributeParserBehavior;
+use nystudio107\disqus\Disqus;
 
 use yii\behaviors\AttributeTypecastBehavior;
 
@@ -140,7 +139,7 @@ class Settings extends Model
                         'disqusPublicKey',
                         'disqusSecretKey',
                     ],
-                ]
+                ],
             ];
         }
 
