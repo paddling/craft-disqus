@@ -1,5 +1,10 @@
 # Disqus Changelog
 
+## 1.1.4 - UNRELEASED
+### Added
+* Add `phpstan` and `ecs` code linting
+* Add `code-analysis.yaml` GitHub action
+
 ## 1.1.3 - 2021.04.20
 ### Added
 * Added Dockerfile & Makefile for building docs
