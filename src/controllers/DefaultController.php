@@ -11,10 +11,10 @@
 
 namespace nystudio107\disqus\controllers;
 
-use nystudio107\disqus\Disqus;
-
 use Craft;
+
 use craft\web\Controller;
+use nystudio107\disqus\Disqus;
 
 /**
  * @author    nystudio107
@@ -23,7 +23,6 @@ use craft\web\Controller;
  */
 class DefaultController extends Controller
 {
-
     // Protected Properties
     // =========================================================================
 
