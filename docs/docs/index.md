@@ -21,8 +21,6 @@ To install Disqus, follow these steps:
 
 You can also install Disqus via the **Plugin Store** in the Craft AdminCP.
 
-Disqus works on Craft 3.x.
-
 ## Configuring Disqus
 
 First, make sure you have [set up a Disqus account](https://disqus.com/websites/).
@@ -30,6 +28,8 @@ First, make sure you have [set up a Disqus account](https://disqus.com/websites/
 Next in the Craft Control Panel, go to Settings->Plugins->Disqus and enter the Short Name for your Disqus site.  This is the only required setting for the Disqus plugin.
 
 All settings are also configurable via the `config.php` file, which is a multi-environment friendly way to store the default settings.  Don’t edit this file, instead copy it to `craft/config` as `disqus.php` and make your changes there.
+
+The **Lazy Load Disqus** settings lets you control whether the Disqus JavaScript will only be [lazily loaded](https://www.samclarke.com/lazy-loading-disqus/) when the user scrolls down to the comments. This is on my default for performance reasons, but you can disabled it if you need to.
 
 ### Single Sign On (SSO)
 
@@ -57,13 +57,13 @@ All of these methods accomplish the same thing:
 
 ```twig
     {# Output the Disqus embed code using the 'disqusEmbed' function #}
-    {{ disqusEmbed(DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
+    {{ disqusEmbed(DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE, SCRIPT_ATTRIBUTES) }}
 
     {# Output the Disqus embed code using the 'disqusEmbed' filter #}
-    {{ DISQUS_IDENTIFIER | disqusEmbed(DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
+    {{ DISQUS_IDENTIFIER | disqusEmbed(DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE, SCRIPT_ATTRIBUTES) }}
 
     {# Output the Disqus embed code using the 'disqusEmbed' variable #}
-    {{ craft.disqus.disqusEmbed(DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE) }}
+    {{ craft.disqus.disqusEmbed(DISQUS_IDENTIFIER, DISQUS_TITLE, DISQUS_URL, DISQUS_CATEGORY_ID, DISQUS_LANGUAGE, SCRIPT_ATTRIBUTES) }}
 ```
 
 All of the parameters except for `DISQUS_IDENTIFIER` are optional.  For more information on what these parameters are, please see [JavaScript configuration variables](https://help.disqus.com/customer/portal/articles/472098-javascript-configuration-variables)
@@ -156,5 +156,17 @@ To have the comments themselves be different per-language, you can do something 
 ```
 
 This will result in comments that are different for each language, and the Disqus embed will be displayed in the same language as the comments.
+
+## Additional `<script>` Attributes
+
+If you need to add additional attributes to the Disqus `<script>` that the Disqus plugin renders, you can do that via the `SCRIPT_ATTRIBUTES` parameter:
+
+```twig
+    {{ disqusEmbed(entry.slug ~ "_" ~ entry.locale, entry.title, entry.url, '', '', { class: "some-class" } ) }}
+```
+
+This will add the `class="some-class"` attribute to the rendered Disqus `<script>` tag.
+
+This can be useful for GDPR compliance integrations.
 
 Brought to you by [nystudio107](https://nystudio107.com)
