@@ -11,12 +11,9 @@
 
 namespace nystudio107\disqus\models;
 
-use nystudio107\disqus\Disqus;
-
-use Craft;
 use craft\base\Model;
 use craft\behaviors\EnvAttributeParserBehavior;
-
+use nystudio107\disqus\Disqus;
 use yii\behaviors\AttributeTypecastBehavior;
 
 /**
@@ -28,6 +25,11 @@ class Settings extends Model
 {
     // Public Properties
     // =========================================================================
+
+    /**
+     * @var bool
+     */
+    public $lazyLoadDisqus = true;
 
     /**
      * @var string
@@ -194,6 +196,8 @@ class Settings extends Model
     public function rules()
     {
         return [
+            ['lazyLoadDisqus', 'boolean'],
+            ['lazyLoadDisqus', 'default', 'value' => false],
             ['disqusShortname', 'string'],
             ['disqusShortname', 'default', 'value' => ''],
             ['useSSO', 'boolean'],
@@ -241,7 +245,7 @@ class Settings extends Model
                         'disqusPublicKey',
                         'disqusSecretKey',
                     ],
-                ]
+                ],
             ];
         }
 

@@ -11,14 +11,14 @@
 
 namespace nystudio107\disqus;
 
-use nystudio107\disqus\services\DisqusService as DisqusService;
-use nystudio107\disqus\variables\DisqusVariable;
-use nystudio107\disqus\twigextensions\DisqusTwigExtension;
-use nystudio107\disqus\models\Settings;
-
 use Craft;
 use craft\base\Plugin;
 use craft\web\twig\variables\CraftVariable;
+use nystudio107\disqus\models\Settings;
+
+use nystudio107\disqus\services\DisqusService as DisqusService;
+use nystudio107\disqus\twigextensions\DisqusTwigExtension;
+use nystudio107\disqus\variables\DisqusVariable;
 
 use yii\base\Event;
 
@@ -46,6 +46,39 @@ class Disqus extends Plugin
      */
     public static $craft31 = false;
 
+    // Public Properties
+    // =========================================================================
+
+    /**
+     * @var string
+     */
+    public $schemaVersion = '1.0.0';
+
+    /**
+     * @var bool
+     */
+    public $hasCpSection = false;
+
+    /**
+     * @var bool
+     */
+    public $hasCpSettings = true;
+
+    // Static Methods
+    // =========================================================================
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($id, $parent = null, array $config = [])
+    {
+        $config['components'] = [
+            'disqusService' => DisqusService::class,
+        ];
+
+        parent::__construct($id, $parent, $config);
+    }
+
     // Public Methods
     // =========================================================================
 
@@ -63,7 +96,7 @@ class Disqus extends Plugin
         Event::on(
             CraftVariable::class,
             CraftVariable::EVENT_INIT,
-            function (Event $event) {
+            function(Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
                 $variable->set('disqus', DisqusVariable::class);
