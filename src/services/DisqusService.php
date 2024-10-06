@@ -17,6 +17,7 @@ use craft\helpers\Template;
 use craft\web\User;
 use craft\web\View;
 use nystudio107\disqus\Disqus;
+use nystudio107\disqus\models\Settings;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
@@ -48,8 +49,9 @@ class DisqusService extends Component
         $disqusCategoryId = "",
         $disqusLanguage = ""
     ) {
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
-        $disqusShortname = $settings['disqusShortname'];
+        $disqusShortname = $settings->disqusShortname;
 
         $vars = [
             'disqusShortname' => $disqusShortname,
@@ -60,7 +62,11 @@ class DisqusService extends Component
             'disqusLanguage' => $disqusLanguage,
         ];
         $vars = array_merge($vars, $this->getSSOVars());
-        $result = $this->renderPluginTemplate('disqusEmbedTag', $vars);
+        $templateName = 'disqusEmbedTag';
+        if ($settings->lazyLoadDisqus) {
+            $templateName = 'disqusEmbedTagLazy';
+        }
+        $result = $this->renderPluginTemplate($templateName, $vars);
 
         return $result;
     }
@@ -75,6 +81,7 @@ class DisqusService extends Component
     public function getCommentsCount(
         $disqusIdentifier = ""
     ) {
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         if (Disqus::$craft31) {
             $settings['disqusPublicKey'] = Craft::parseEnv($settings['disqusPublicKey']);
@@ -122,6 +129,7 @@ class DisqusService extends Component
      */
     protected function getSSOVars(): array
     {
+        /** @var Settings $settings */
         $settings = Disqus::$plugin->getSettings();
         $vars = [
             'useSSO' => false,
